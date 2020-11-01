@@ -1,33 +1,146 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8" />
-<title>Mein Portfolio</title>
-<style>
-body {
-	font-family: arial;
-	font-size: medium;
-	background: #cfc8c8;
-}
-</style>
+    <meta charset="utf-8" />
+    <title>Contacs</title>
+    <style>
+        body {
+            font-size: medium;
+            background: #1a1917;
+
+        }
+
+        header {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 50px;
+            color: #735f42;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            padding-left: 50px;
+        }
+
+        nav a {
+            font-family: 'Courier New', Courier, monospace;
+            padding: 50px;
+            font-size: 40px;
+            color: #735f42;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: white;
+
+        }
+
+        img {
+            width: 45%;
+            height: 45%;
+            display: inline;
+            padding: 2%;
+
+        }
+
+        main {
+            
+            text-align: left;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 200%;
+            color: #E6BE70;
+        }
+
+        header a {
+            color: #735f42;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            color: white;
+
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #E6BE70;
+        }
+
+        .grid{
+                display: grid;
+                font-size: 30px;
+                color: black;
+                padding: 10px;
+                grid-template-columns:auto auto;
+            }
+
+            .item1{
+                grid-row: 1/6;
+            }
+            .grid{
+                margin-top: 2%;
+                padding: 10px;
+                width: 80%;
+                display: grid;
+                font-size: 30px;
+                color: #404040;
+                grid-template-columns:auto auto;
+            }
+
+            .grid-item img{
+                width: 80px;
+            }
+    </style>
 </head>
 
 <body>
-    <nav>
+    <header>
+        <a href="../Aufgabe2/Main.html">Portfolio</a>
+    </header>
 
+    <nav>
+        <a href="../Aufgabe2/Persönliches Portfolio.html">Mein Portfolio</a>
+        <a href="../Aufgabe2/About Me.html">About Me</a>
+        <a title="You are here" href="../Aufgabe2/Contact.html">Contacts</a>
 
     </nav>
 
 
     <main>
-
+        <div class="grid">
+            <div class="grid-item">
+                <img src="../Aufgabe2/assets/Icons/discord.png" alt="Discord">
+            </div>
+            <div class="grid-item"><br>xFaiiLeR#7989</div>
+            <div class="grid-item"><a href="https://twitter.com/xFaiiLeR">
+                <img src="assets/Icons/twitter.png" alt="twitter"></a>
+            </div>
+            <div class="grid-item"><br>@xFaiiLeR
+            </div>
+            <div class="grid-item"><img src="../Aufgabe2/assets/Icons/email.png" alt="email">
+            </div>
+            <div class="grid-item"><br>maximilian.buckel@hs-furtwangen.de
+            </div>
+            <div class="grid-item"><a href="https://github.com/Faiiler/EIA1_WISe20-21">
+                <img src="assets/Icons/github.png" alt="github"></a>
+            </div>
+            <div class="grid-item"><br>Faiiler
+            </div>
+            <div class="grid-item"><a href="https://www.twitch.tv/xfaiiler">
+                <img src="assets/Icons/twitch.png" alt="twitch"></a>
+            </div>
+            <div class="grid-item"><br>ttv/xFaiiLeR
+            </div>
 
     </main>
 
-    
+
 
     <footer>
 
+        <p>
+        <div style="float: light; color: bisque;">Icons made by <a href="https://icon54.com/"
+                title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/"
+                title="Flaticon">www.flaticon.com</a></div>
+        <i style="float: right; color: bisque;">Designed by Maximilian Buckel</i></p>
 
 
     </footer>

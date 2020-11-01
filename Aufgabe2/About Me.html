@@ -1,25 +1,101 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8" />
-<title>Mein Portfolio</title>
-<style>
-body {
-	font-family: arial;
-	font-size: medium;
-	background: #cfc8c8;
-}
-</style>
+    <head>
+        <meta charset="utf-8" />
+        <title>About me</title>
+        <style>
+            body {
+                font-size: medium;
+                background: #1a1917;
+    
+            }
+    
+            header {
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 50px;
+                color: #735f42;
+                margin-top: 50px;
+                margin-bottom: 30px;
+                padding-left: 50px;
+            }
+    
+            nav a {
+                font-family: 'Courier New', Courier, monospace;
+                padding: 50px;
+                font-size: 40px;
+                color: #735f42;
+                text-decoration: none;
+            }
+    
+            nav a:hover {
+                color: white;
+    
+            }
+    
+    
+            main {
+                margin-top: 100px;
+                margin-left: 50px;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                font-size: 200%;
+                color: #E6BE70;
+            }
+    
+            header a {
+                color: #735f42;
+                text-decoration: none;
+            }
+    
+            header a:hover {
+                color: white;
+    
+            }
+
+            .grid{
+                display: grid;
+                font-size: 30px;
+                color: black;
+                padding: 10px;
+                grid-template-columns:auto auto auto;
+            }
+
+            .item1{
+                 grid-row: 1/6;
+            }
+
+            
+        </style>
 </head>
 
 <body>
-    <nav>
+    
+    <header>
+        <a href="../Aufgabe2/Main.html">Portfolio</a>
+    </header>
 
+    <nav>
+        <a href="../Aufgabe2/Persönliches Portfolio.html">Mein Portfolio</a>
+        <a title="You are here" href="../Aufgabe2/About Me.html">About Me</a>
+        <a href="../Aufgabe2/Contact.html">Contacts</a>
 
     </nav>
 
 
     <main>
+        <div class="grid" style="color: #E6BE70;">
+            <div class="item1"> <img src="../Aufgabe2/assets/Portfolio/Me.jpg" width="60%" alt="Max"> </div>
+           <div> Name: </div>
+           <div> Maximilian Buckel </div>
+           <div> Age: </div>
+           <div> 21 </div>
+           <div> Location: </div>
+           <div> Villingen-Schwenningen </div>
+           <div> Birthday: </div>
+           <div> 18.01.1999 </div>
+           <div> Hobbies: </div>
+           <div> Bouldering, Gaming </div>
+        </div>
+        
 
 
     </main>
@@ -27,7 +103,7 @@ body {
     
 
     <footer>
-
+        <p><i style="float: right; color: bisque;">Designed by Maximilian Buckel</i></p>
 
 
     </footer>
