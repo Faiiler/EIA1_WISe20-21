@@ -31,9 +31,10 @@ body{
 ul {
     list-style-type: none;
     position: fixed;
-    top: 15px;
-    right: 15px;
+    top: -18px;
+    right: 20px;
     float: right;
+    margin: 0;
 }
 
 :not(ul){
