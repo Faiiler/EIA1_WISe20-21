@@ -1,0 +1,116 @@
+body {
+    background-image: url(assets/bg.png);
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text {
+    font-size: 24px;
+    font-family: sans-serif;
+    font-weight: bold;
+    position: absolute;
+    top: 40px;
+    left: 220px;
+    transform: translate(-50%, -50%);
+    color: white;
+
+}
+
+.stern {
+    position: absolute;
+    top: 170px;
+    left: 100px;
+    transform: translate(-50%, -50%); 
+}
+
+.sternhover{
+    position: absolute;
+    top: 170px;
+    left: 100px;
+    transform: translate(-50%, -50%);
+    opacity: 0; 
+}
+
+.sternhover:hover {
+    position: absolute;
+    top: 170px;
+    left: 100px;
+    transform: translate(-50%, -50%);
+    opacity: 1; 
+}
+
+.stern2 {
+    position: absolute;
+    top: 270px;
+    left: 200px;
+    transform: translate(-50%, -50%); 
+}
+
+.sternhover2{
+    position: absolute;
+    top: 270px;
+    left: 200px;
+    transform: translate(-50%, -50%);
+    opacity: 0; 
+}
+
+.sternhover2:hover {
+    position: absolute;
+    top: 270px;
+    left: 200px;
+    transform: translate(-50%, -50%);
+    opacity: 1; 
+}
+
+.stern3 {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    transform: translate(-50%, -50%); 
+}
+
+
+.sternhover3{
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    transform: translate(-50%, -50%);
+    opacity: 0; 
+}
+
+.sternhover3:hover {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+    transform: translate(-50%, -50%);
+    opacity: 1; 
+}
+
+
+.stern4 {
+    position: absolute;
+    top: 245px;
+    left: 420px;
+    transform: translate(-50%, -50%); 
+}
+
+.sternhover4{
+    position: absolute;
+    top: 245px;
+    left: 420px;
+    transform: translate(-50%, -50%);
+    opacity: 0; 
+}
+
+.sternhover4:hover {
+    position: absolute;
+    top: 245px;
+    left: 420px;
+    transform: translate(-50%, -50%);
+    opacity: 1; 
+}

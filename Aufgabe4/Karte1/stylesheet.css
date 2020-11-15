@@ -1,0 +1,48 @@
+body {
+    background-image: url(assets/bg.png);
+    
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /*Damit die Karte auch in der Mitte ist, wird auch richtig positioniert, wenn anderes Device*/
+}
+
+.plant {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 30px;
+    left: 40px;
+    
+
+}
+
+.penguin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    bottom: -120px;
+    right: -90px;
+
+}
+
+h1 {
+    position: absolute;
+    font-size: 24px;
+    font-family: sans-serif;
+    transform: translate(-50%, -50%);
+    top: 75px;
+    left: 245px;
+    color: white;
+}
+
+.text {
+    position: absolute;
+    font-size: 14px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    transform: translate(-50%, -50%);
+    bottom: 25px;
+    left: 245px;
+}

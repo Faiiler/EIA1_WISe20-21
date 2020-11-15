@@ -1,0 +1,25 @@
+body {
+    background-image: url(assets/bg.png);
+}  
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.video {
+    position: absolute;
+    top: 200px;
+    left: 300px;
+    transform: translate(-50%, -50%);
+}
+
+.loop {
+    position: absolute;
+    bottom: -57px;
+    right: -107px;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}

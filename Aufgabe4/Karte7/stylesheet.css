@@ -1,0 +1,68 @@
+body {
+    background-image: url(assets/images/bg.png);
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tree {
+    position: absolute;
+    bottom: -156px;
+    right: -100px;
+    transform: translate(-50%, -50%);
+}
+
+.presents {
+    position: absolute;
+    bottom: -105px;
+    right: -135px;
+    transform: translate(-50%, -50%);
+}
+
+.plant {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    transform: translate(-50%, -50%);
+}
+
+.text {
+    position: absolute;
+    top: 250px;
+    left: 200px;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+h1 {
+    position: absolute;
+    top: 150px;
+    left: 125px;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.sternfunkeln1 {
+    position: absolute;
+    top: 120px;
+    left: 240px;
+    transform: translate(-50%, -50%);
+}
+
+.sternfunkeln2 {
+    position: absolute;
+    top: 70px;
+    left: 170px;
+    transform: translate(-50%, -50%);
+}
+
+.sternfunkeln3 {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    transform: translate(-50%, -50%);
+}

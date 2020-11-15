@@ -1,0 +1,151 @@
+body {
+    background: url(assets/bg.png);
+    
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loop {
+    position: absolute;
+    bottom: -57px;
+    right: -107px;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+h1 {
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+
+    animation-duration: 5s;
+    animation-name: h1;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.text {
+    position: absolute;
+    top: 55%;
+    left: 245px;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 13px;
+}
+
+.animation1 {
+    position: absolute;
+    animation-name: animation1;
+    animation-duration: 3.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    top: 14px;
+    right: 100px;
+
+}
+
+.animation2 {
+    position: absolute;
+    animation-name: animation2;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    top: 14px;
+    right: 150px;
+
+}
+
+.animation3 {
+    position: absolute;
+    animation-name: animation1;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    top: 14px;
+    left: 210px;
+
+}
+
+.animation4 {
+    position: absolute;
+    animation-name: animation2;
+    animation-duration: 2.8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    top: 14px;
+    left: 150px;
+
+}
+
+.animation5 {
+    position: absolute;
+    animation-name: animation2;
+    animation-duration: 2.6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    top: 14px;
+    left: 300px;
+
+
+}
+
+@keyframes animation1 {
+    from {
+        top: 0%;
+    }
+    to {
+        top: 80%;
+    }
+}
+
+@keyframes animation2 {
+    from {
+        top: 0%;
+    }
+    to {
+        top: 80%;
+    }
+}
+
+@keyframes animation3 {
+    from {
+        top: 0%;
+    }
+    to {
+        top: 80%;
+    }
+}
+
+@keyframes animation4 {
+    from {
+        top: 0%;
+    }
+    to {
+        top: 80%;
+    }
+}
+
+
+@keyframes h1 {
+    0% {
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
