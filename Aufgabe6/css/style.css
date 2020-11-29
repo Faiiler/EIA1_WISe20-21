@@ -1,0 +1,43 @@
+html, body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: center;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    background-image: url(../images/bg.webp);
+}
+
+nav {
+    margin-bottom: 60px;
+}
+
+section {
+    display: inline-block;
+    margin: 20px;
+    width: 200px;
+}
+
+footer p {
+    margin-top: 50px;
+    font-size: 10px;
+    opacity: .5;
+}
+
+#chartWrapper {
+    position: relative;
+    margin: auto; 
+    width: 300px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.089);
+}
+
+#chart {
+    position: absolute;
+    bottom: 0;
+    width: 300px;
+    height: 50px;
+    background-color: #000000;
+
+    transition: width 2s;
+}
