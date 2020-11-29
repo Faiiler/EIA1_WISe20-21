@@ -10,6 +10,7 @@ html, body {
 
 nav {
     margin-bottom: 60px;
+    height: 230px;
 }
 
 section {
@@ -24,6 +25,20 @@ footer p {
     opacity: .5;
 }
 
+img {
+    height: 185px;
+    opacity: 0.8;
+    transition: height 0.5s, opacity 0.5s;
+    cursor: pointer;
+}
+
+
+img:hover {
+    height: 220px;
+    opacity: 1;
+
+}
+
 #chartWrapper {
     position: relative;
     margin: auto; 
@@ -35,7 +50,7 @@ footer p {
 #chart {
     position: absolute;
     bottom: 0;
-    width: 300px;
+    width: 0px;
     height: 50px;
     background-color: #000000;
 
