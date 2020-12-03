@@ -1,0 +1,43 @@
+body {
+    background-color: #333333;
+}
+
+.box {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+
+
+.button {
+    height: 150px;
+    width: 150px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}   
+
+.play {
+    background-image: url(./assets/pictures/play-button.png);
+    background-color: transparent;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    font-size: 30px;
+    color: bisque;
+    font-family: sans-serif;
+}
+
+h2 {
+    text-align: center;
+    font-size: 12px;
+    color: bisque;
+    font-family: sans-serif;
+}
