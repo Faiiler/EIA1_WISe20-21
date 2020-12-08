@@ -12,7 +12,7 @@ for (let i = 0; i < audio.length; i++) {
     button.setAttribute("style", "background-color:"+randomHSL()+";");
     button.addEventListener("click", function () {
         playSample(audio[i]);
-    });
+    }); 
 }
 
 document.querySelector("h1").setAttribute("style", "color:"+randomHSL()+";");
