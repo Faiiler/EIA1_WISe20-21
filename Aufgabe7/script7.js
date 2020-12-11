@@ -38,4 +38,4 @@ function randomHSL() {
 function rand(min, max) {
     return min + Math.random() * (max - min);
 }
-//# sourceMappingURL=script.js.map
+//# sourceMappingURL=script7.js.map
