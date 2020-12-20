@@ -9,9 +9,16 @@ body {
     display: grid;
     grid: 
      "header header header header" auto
-     "..... lists active ....." auto /
+     "..... lists active ....." auto
+     "..... ..... info ....." auto/
      1fr minmax(150px, 300px) minmax(300px, 500px) 1fr;
 }
+
+.info {
+    margin-top: 60px;
+    grid-area: info;
+}
+
      .title {
          grid-area: header;
          text-align: center;
