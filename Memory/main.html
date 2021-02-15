@@ -6,25 +6,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/fontawesome.min.css" integrity="sha512-shT5e46zNSD6lt4dlJHb+7LoUko9QZXTGlmWWx0qjI9UhQrElRb+Q5DM7SVte9G9ZNmovz2qIaV7IWv0xQkBkw==" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/solid.min.css" integrity="sha512-xIEmv/u9DeZZRfvRS06QVP2C97Hs5i0ePXDooLa5ZPla3jOgPT/w6CzoSMPuRiumP7A/xhnUBxRmgWWwU26ZeQ==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/fontawesome.min.css"
+          integrity="sha512-shT5e46zNSD6lt4dlJHb+7LoUko9QZXTGlmWWx0qjI9UhQrElRb+Q5DM7SVte9G9ZNmovz2qIaV7IWv0xQkBkw=="
+          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/solid.min.css"
+          integrity="sha512-xIEmv/u9DeZZRfvRS06QVP2C97Hs5i0ePXDooLa5ZPla3jOgPT/w6CzoSMPuRiumP7A/xhnUBxRmgWWwU26ZeQ=="
+          crossorigin="anonymous"/>
 
     <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
-   <div>
-       <div id="cards-container">
-            <!-- Generated from template below -->
-       </div>
-   </div>
+<div>
+    <div id="splashscreen">
+        <div class="splashscreen-button-container">
+            <button class="difficulty-button easy" data-difficulty="easy">
+                Easy
+            </button>
+            <button class="difficulty-button medium" data-difficulty="medium">
+                Medium
+            </button>
+            <button class="difficulty-button hard" data-difficulty="hard">
+                Hard
+            </button>
+        </div>
+    </div>
+    <div id="cards-container">
 
-   <div id="card-template" class="card">
-       <span class="card-icon-wrapper"><i class="card-icon fas"></i></span>
-       <span class="card-name"></span>
-       <span class="card-text"></span>
-   </div>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<div id="card-template" class="card">
+    <div class="card-inner">
+        <div class="card-front">
+
+        </div>
+        <div class="card-back">
+           <div class="card-content">
+               <div class="card-icon-wrapper"></div>
+               <div class="card-name"></div>
+               <div class="card-text"></div>
+           </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
