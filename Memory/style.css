@@ -6,6 +6,12 @@
     --card-height: calc(100 / var(--card-rows) * 0.9vh);
 
     --text-size: 2em;
+    --symbol-size: 2vw;
+}
+
+body {
+    background: url("res/moss.jpg");
+    font-family: monospace;
 }
 
 #card-template {
@@ -17,14 +23,19 @@
     grid-template-columns: repeat(var(--card-columns), var(--card-width));
     grid-template-rows: repeat(var(--card-rows), var(--card-height));
     grid-column-gap: 5px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .card {
-    font-family: monospace;
 
     width: calc(var(--card-width) - 1vw);
     height: calc(var(--card-height) - 1vh);
-    margin: 10px;
+    margin-top: 2vh;
+    margin-left: 2vw;
 }
 
 /* Flipping stuff based on https://www.w3schools.com/howto/howto_css_flip_card.asp */
@@ -36,6 +47,7 @@
     position: relative;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    box-shadow: black 0 0 10px;
 }
 
 .card.flipped .card-inner {
@@ -47,18 +59,22 @@
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .card-front {
-    background-color: #bbb;
-    color: black;
+
+    background: url("res/marble.jpg");
+    background-size: cover;
 }
 
 .card-back {
-    background-color: dodgerblue;
-    color: white;
+    color: #353535;
     transform: rotateY(180deg);
 
+    background: url("res/paper.jpg");
+    background-size: cover;
 }
 
 .card-content {
@@ -67,18 +83,17 @@
 
 
 .card-icon-wrapper {
-    width: 40px;
-    height: 40px;
+    width: var(--symbol-size);
+    height: var(--symbol-size);
     display: inline-block;
     vertical-align: super;
 }
 
 
 .card-name {
-    font-size: 40px;
+    font-size: var(--symbol-size);
     vertical-align: 10px;
     display: inline-block;
-    color: #BB12AC
 }
 
 .card-text {
@@ -86,6 +101,21 @@
     font-size: var(--text-size);
 }
 
+
+#score-container {
+    text-align: center;
+
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+}
+#score {
+    font-size: 2vw;
+    text-align: center;
+    color: #cdcdcd;
+}
+
+/**************/
 
 #splashscreen {
     position: absolute;
@@ -112,11 +142,13 @@
 }
 
 .difficulty-button {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     margin: 20px;
     border: none;
     font-size: 20px;
+    border-radius: 5px;
+    box-shadow: black 0 0 5px;
 }
 
 .difficulty-button.easy {
@@ -128,3 +160,5 @@
 .difficulty-button.hard {
     background-color: red;
 }
+
+

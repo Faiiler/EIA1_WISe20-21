@@ -54,9 +54,15 @@ const ROWS_COLS = {
 };
 
 const TEXT_SIZES = {
-    "easy": "2.2em",
-    "medium": "2em",
-    "hard": "1.6em"
+    "easy": "1.6em",
+    "medium": "1,4em",
+    "hard": "0.87em"
+}
+
+const SYMBOL_SIZES = {
+    "easy": "3vw",
+    "medium": "2.5vw",
+    "hard": "2vw"
 }
 
 const CARD_NAMES = [
@@ -117,7 +123,7 @@ const SENTENCES: Sentence[] = [
     {
         a: "Funktionen haben folgenden Aufbau:...",
         b: "... Funktionsname (Parameter): Typ { <br/>" +
-            "   Codeinhalt" +
+            "   Codeinhalt <br/>    " +
             "};"
     },
     {
@@ -137,8 +143,8 @@ const SENTENCES: Sentence[] = [
         b: "...existieren nicht, nur Abfragen! (if-Schleife.de)"
     },
     {
-        a: "Die Werte in einem Interface...",
-        b: "...können bei einer Anwendung nicht verändert werden. Die Vorgaben müssen eingehalten werden (-> bei einer number als Vorlage können nur Zahlen verwendet werden!)"
+        a: "Die Vorgaben in einem Interface...",
+        b: "...können bei einer Anwendung nicht verändert werden. Diese müssen eingehalten werden (-> bei einer number als Vorlage können nur Zahlen verwendet werden!)"
     },
     {
         a: "Vergleichsoperatoren für Zahlen sind:...",
@@ -253,6 +259,7 @@ function placeCards(cards: Card[]): void {
         cardElement.querySelector(".card-icon-wrapper").innerHTML = CARD_IMAGES[card.type.symbol];
         (cardElement.querySelector(".card-icon-wrapper>svg>path") as HTMLLIElement).style.fill = card.type.color;
         cardElement.querySelector(".card-name").innerHTML = card.type.name;
+        (cardElement.querySelector(".card-name") as HTMLElement).style.color = card.type.color;
         cardElement.querySelector(".card-text").innerHTML = card.sentence;
 
         cardElement.addEventListener("click", e => onCardClick(e, cardElement, card));
@@ -270,8 +277,11 @@ function generateAndPlaceCards(difficulty: string): void {
     rootStyle.setProperty("--card-columns", rc.c);
     rootStyle.setProperty("--card-rows", rc.r);
 
-    let size = TEXT_SIZES[difficulty];
-    rootStyle.setProperty("--text-size", size);
+    let textSize = TEXT_SIZES[difficulty];
+    rootStyle.setProperty("--text-size", textSize);
+
+    let symbolSize = SYMBOL_SIZES[difficulty];
+    rootStyle.setProperty("--symbol-size", symbolSize);
 
     placeCards(cards);
 }
@@ -340,18 +350,20 @@ function unflipCard(cardElement: HTMLDivElement, card: PartialCard) {
     card.flipped = false;
 }
 
+ //TODO: sounds n stuff
+
 function updateScore() {
     console.log("Score: " + score);
-    //TODO: html
+    document.querySelector("#score").innerHTML = `${score}`;
 }
 
 // Hides the splashscreen + starts the game with selected difficulty
 function start(difficulty: string): void {
+    (document.querySelector(".splashscreen-button-container") as HTMLElement).style.display = "none";
     splashscreen.classList.add("hidden");
     setTimeout(() => {
         splashscreen.style.display = "none";
     }, 800);
-    score = 0;
     generateAndPlaceCards(difficulty);
 }
 
