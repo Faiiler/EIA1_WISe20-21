@@ -18,6 +18,7 @@
 </head>
 <body>
 <div>
+    <!-- On-top stuff -->
     <div id="splashscreen">
         <div class="splashscreen-button-container">
             <button class="difficulty-button easy" data-difficulty="easy">
@@ -29,17 +30,47 @@
             <button class="difficulty-button hard" data-difficulty="hard">
                 Hard
             </button>
+            <br/>
+            <select id="gametype-select">
+                <option value="solo" selected>Singleplayer</option>
+                <option value="ai">vs Computer</option>
+                <option value="multi">Multiplayer</option>
+            </select>
+        </div>
+    </div>
+    <div id="winscreen" style="display: none">
+        <div class="winmessage-container">
+            <span id="winmessage">You win! Or not... idk yet</span>
+            <br/>
+            <button id="play-again-button">
+                Play Again!
+            </button>
+        </div>
+    </div>
+
+    <!-- Actual game -->
+    <div id="top-container" style="display: none">
+        <div>
+            <span id="player-indicator">Player 1's turn</span>
         </div>
     </div>
     <div id="cards-container">
-
+        <!-- Generated -->
     </div>
-    <div id="score-container">
-        <span id="score">0</span>
+    <div id="bottom-container" style="display: none">
+        <div id="score-container">
+            <span class="score-container" id="score0container">Player 1: <span class="score" id="score0">0</span></span>
+            <span class="score-container" id="score1container">Player 2: <span class="score" id="score1">0</span></span>
+        </div>
+    </div>
+
+
+    <div id="footermsg">
+        <span>Not made by Maximilian Buckel 266830</span>
     </div>
 </div>
 
-<div id="card-template" class="card">
+<div id="card-template">
     <div class="card-inner">
         <div class="card-front">
 

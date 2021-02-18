@@ -20,14 +20,20 @@ interface Card {
 interface PartialCard {
     type: CardType;
     sentence?: string; // ? = Optional, muss kein Satz haben
-    flipped?: boolean;
 }
 
 /////////////
 
 const splashscreen: HTMLElement = document.querySelector("#splashscreen");
+const gameTypeSelect: HTMLSelectElement = document.querySelector("#gametype-select");
+
+const winscreen: HTMLElement = document.querySelector("#winscreen");
+const winMessage: HTMLElement = document.querySelector("#winmessage");
+
 const cardsContainer: HTMLDivElement = document.querySelector("#cards-container");
 const cardTemplate: HTMLDivElement = document.querySelector("#card-template");
+
+const playerIndicator: HTMLElement = document.querySelector("#player-indicator");
 
 
 ///////////
@@ -260,12 +266,10 @@ function placeCards(cards: Card[], difficulty: string): void {
     for (let card of partialCards) {
         let cardElement: HTMLDivElement = cardTemplate.cloneNode(true) as HTMLDivElement;
         cardElement.id = `card${cardCounter++}`;
+        cardElement.classList.add("card");
         cardElement.classList.add(difficulty);
 
-        //TODO: remove if you don't want cheaters
-        cardElement.dataset["name"] = card.type.name;
-        cardElement.dataset["symbol"] = card.type.symbol;
-        cardElement.dataset["sentence"] = card.sentence;
+        cardElement.dataset["carddata"] = btoa(JSON.stringify(card));
 
         if (difficulty !== "hard") {
             cardElement.querySelector(".card-icon-wrapper").innerHTML = CARD_IMAGES[card.type.symbol];
@@ -277,7 +281,7 @@ function placeCards(cards: Card[], difficulty: string): void {
             cardElement.querySelector(".card-text").innerHTML = card.sentence;
         }
 
-        cardElement.addEventListener("click", e => onCardClick(e, cardElement, card));
+        cardElement.addEventListener("click", e => onCardClick(e, cardElement));
 
         cardsContainer.appendChild(cardElement);
     }
@@ -301,24 +305,34 @@ function generateAndPlaceCards(difficulty: string): void {
     placeCards(cards, difficulty);
 }
 
+let difficulty: string = "easy";
+let gameType: string = "solo";
 
-let score: number = 0;
+let activePlayer: number = 0;
+let scores: number[] = [0, 0];
 
 let inputLocked: boolean = false;
 let lastFlippedCard: PartialCard;
 let lastFlippedCardElement: HTMLDivElement;
 
-function onCardClick(event: MouseEvent, cardElement: HTMLDivElement, card: PartialCard) {
+function onCardClick(event: MouseEvent, cardElement: HTMLDivElement, isAiClick: boolean = false) {
     if (inputLocked) {
+        // disable input while animation is playing
         return;
     }
-    if (card.flipped) {
+    if (gameType === "ai" && activePlayer !== 0 && !isAiClick) {
+        // disable input while ai is playing
         return;
     }
-    console.log("Card flipped!");
+
+    if (cardElement.classList.contains("flipped")) {
+        return;
+    }
+
+    let card = JSON.parse(atob(cardElement.dataset["carddata"])) as PartialCard;
+    console.log(`Card flipped by player ${activePlayer}!`);
     console.log(card);
 
-    card.flipped = true;
     cardElement.classList.add("flipped");
 
     if (lastFlippedCard) {
@@ -326,32 +340,52 @@ function onCardClick(event: MouseEvent, cardElement: HTMLDivElement, card: Parti
         // but prevent another click while the flip-back animations are still playing
         inputLocked = true;
 
-        if (lastFlippedCard.type === card.type) { // matching cards!
+        if (areCardsEqual(lastFlippedCard, card)) { // matching cards!
             console.log("Matching cards!")
-            score++;
+            scores[activePlayer]++;
+
+            let lastFlippedCardElementCopy = lastFlippedCardElement;
+            setTimeout(function () {
+                cardElement.classList.add("hidden");
+                lastFlippedCardElementCopy.classList.add("hidden");
+            }, 800);
 
             lastFlippedCard = undefined;
             lastFlippedCardElement = undefined;
 
             // Allow inputs again
-            setTimeout(() => {
+            setTimeout(function () {
                 inputLocked = false;
             }, 500);
+
+            // matched card, give the player another chance
         } else { // don't match :c
             console.log("Wrong cards!")
-            setTimeout(() => {
-                unflipCard(cardElement, card);
-                unflipCard(lastFlippedCardElement, lastFlippedCard);
+            setTimeout(function () {
+                unflipCard(cardElement);
+                unflipCard(lastFlippedCardElement);
                 lastFlippedCard = undefined;
                 lastFlippedCardElement = undefined;
 
                 // Allow inputs again
-                setTimeout(() => {
+                setTimeout(function () {
                     inputLocked = false;
                 }, 500)
             }, SHOW_CARD_DURATION);
+
+            // let the other player play
+            if (gameType !== "solo") {
+                if (activePlayer === 0) {
+                    activePlayer = 1;
+                } else {
+                    activePlayer = 0;
+                }
+            }
         }
 
+        setTimeout(function () {
+            switchPlayer();
+        }, 500);
     } else {
         lastFlippedCard = card;
         lastFlippedCardElement = cardElement;
@@ -360,40 +394,119 @@ function onCardClick(event: MouseEvent, cardElement: HTMLDivElement, card: Parti
     updateScore();
 }
 
-function unflipCard(cardElement: HTMLDivElement, card: PartialCard) {
-    cardElement.classList.remove("flipped");
-    card.flipped = false;
+function areCardsEqual(a: PartialCard, b: PartialCard) {
+    return a.type.color === b.type.color && a.type.symbol === b.type.symbol && a.type.name === b.type.name;
 }
 
-//TODO: sounds n stuff
+function unflipCard(cardElement: HTMLDivElement) {
+    cardElement.classList.remove("flipped");
+}
 
 function updateScore() {
-    console.log("Score: " + score);
-    document.querySelector("#score").innerHTML = `${score}`;
+    console.log("Scores: " + scores);
+    for (let i = 0; i < scores.length; i++) {
+        document.querySelector(`#score${i}`).innerHTML = `${scores[i]}`;
+    }
+
+    // Check if we're done
+    let availableCards = document.querySelectorAll(".card:not(.flipped)") as NodeListOf<HTMLDivElement>;
+    if (availableCards.length === 0) {
+        console.log("I found no cards, I guess we're done!");
+
+        if (scores[0] > scores[1]) {
+            if (gameType === "ai" || gameType === "solo") {
+                winMessage.innerHTML = "You win!"
+            } else if (gameType === "multi") {
+                winMessage.innerHTML = "Player 1 wins!"
+            }
+        } else if (scores[0] < scores[1]) {
+            if (gameType === "ai") {
+                winMessage.innerHTML = "You lose";
+            } else if (gameType === "multi") {
+                winMessage.innerHTML = "Player 2 wins!"
+            }
+        } else {
+            winMessage.innerHTML = "Draw!";
+        }
+
+        setTimeout(function () {
+            winscreen.classList.add("visible");
+            winscreen.style.display = "";
+        }, 500);
+    }
+}
+
+function switchPlayer() {
+    if (gameType === "solo") return;
+    if (gameType === "ai") {
+        if (activePlayer === 0) {
+            playerIndicator.innerHTML = "Player's turn";
+        } else {
+            playerIndicator.innerHTML = "Computer's turn";
+
+            setTimeout(function () {
+                makeAiTurn(true);
+            }, SHOW_CARD_DURATION + 1000);
+        }
+    } else if (gameType === "multi") {
+        playerIndicator.innerHTML = `Player ${activePlayer + 1}'s turn`;
+    }
+}
+
+function makeAiTurn(flipAgain: boolean) {
+    let availableCards = document.querySelectorAll(".card:not(.flipped)") as NodeListOf<HTMLDivElement>;
+    if (availableCards.length === 0) {
+        return;
+    }
+    let cardElement = availableCards.item(Math.floor(Math.random() * availableCards.length));
+
+    onCardClick(undefined, cardElement, true);
+
+    if (flipAgain) {
+        setTimeout(function () {
+            makeAiTurn(false);
+        }, 800);
+    }
 }
 
 // Hides the splashscreen + starts the game with selected difficulty
-function start(difficulty: string): void {
+function start(diff: string, type: string): void {
+    winscreen.classList.remove("visible");
+    winscreen.style.display = "none";
+
+    (document.querySelector("#top-container") as HTMLElement).style.display = "";
+    (document.querySelector("#bottom-container") as HTMLElement).style.display = "";
+
+    console.log(`Starting ${diff} ${type} game`);
+
     (document.querySelector(".splashscreen-button-container") as HTMLElement).style.display = "none";
     splashscreen.classList.add("hidden");
-    setTimeout(() => {
+    difficulty = diff;
+    gameType = type;
+    setTimeout(function () {
         splashscreen.style.display = "none";
     }, 800);
-    generateAndPlaceCards(difficulty);
+    generateAndPlaceCards(diff);
+
+    if (type === "solo") {
+        (document.querySelector("#score1container") as HTMLElement).style.display = "none";
+    } else if (type === "ai") {
+        // let the computer go first
+        activePlayer = 1;
+        switchPlayer();
+    }
 }
 
-document.querySelectorAll(".difficulty-button").forEach((el: HTMLElement) => {
-    el.addEventListener("click", e => {
-        start(el.dataset["difficulty"]);
+
+document.querySelectorAll(".difficulty-button").forEach(function (el: HTMLElement) {
+    el.addEventListener("click", function() {
+        start(el.dataset["difficulty"], gameTypeSelect.value);
     })
+});
+document.querySelector("#play-again-button").addEventListener("click", function () {
+    //  start(difficulty, gameType);
+    window.location.reload();
 })
-
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_integer_between_two_values
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
 
 // https://stackoverflow.com/a/6274381
 /**
