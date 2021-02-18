@@ -18,8 +18,8 @@ interface Card {
 
 /** One of two cards in a pair **/
 interface PartialCard {
-    sentence: string;
     type: CardType;
+    sentence?: string; // ? = Optional, muss kein Satz haben
     flipped?: boolean;
 }
 
@@ -60,7 +60,7 @@ const TEXT_SIZES = {
 }
 
 const SYMBOL_SIZES = {
-    "easy": "3vw",
+    "easy": "4vw",
     "medium": "2.5vw",
     "hard": "2vw"
 }
@@ -88,12 +88,22 @@ const CARD_SYMBOLS = [
 ];
 
 const CARD_COLORS = [
-    "green",
-    "blue",
-    "purple",
-    "pink",
-    "red"
-    //TODO i need colors
+    "#540D6E",
+    "#EE4266",
+    "#EE4266",
+    "#3BCEAC",
+    "#0EAD69",
+    "#6E9887",
+    "#216869",
+    "#49A078",
+    "#4C4C47",
+    "#848FA5",
+    "#F564A9",
+    "#40531B",
+    "#690375",
+    "#DAA89B",
+    "#CB429F",
+    "#4A6C6F"
 ];
 
 const CARD_IMAGES = {
@@ -231,7 +241,7 @@ function generateCards(difficulty: string): Card[] {
 }
 
 
-function placeCards(cards: Card[]): void {
+function placeCards(cards: Card[], difficulty: string): void {
     // Convert the merged cards into partial ones with separate sentence parts
     const partialCards: PartialCard[] = [];
     for (let card of cards) {
@@ -250,17 +260,22 @@ function placeCards(cards: Card[]): void {
     for (let card of partialCards) {
         let cardElement: HTMLDivElement = cardTemplate.cloneNode(true) as HTMLDivElement;
         cardElement.id = `card${cardCounter++}`;
+        cardElement.classList.add(difficulty);
 
         //TODO: remove if you don't want cheaters
         cardElement.dataset["name"] = card.type.name;
         cardElement.dataset["symbol"] = card.type.symbol;
         cardElement.dataset["sentence"] = card.sentence;
 
-        cardElement.querySelector(".card-icon-wrapper").innerHTML = CARD_IMAGES[card.type.symbol];
-        (cardElement.querySelector(".card-icon-wrapper>svg>path") as HTMLLIElement).style.fill = card.type.color;
+        if (difficulty !== "hard") {
+            cardElement.querySelector(".card-icon-wrapper").innerHTML = CARD_IMAGES[card.type.symbol];
+            (cardElement.querySelector(".card-icon-wrapper>svg>path") as HTMLLIElement).style.fill = card.type.color;
+        }
         cardElement.querySelector(".card-name").innerHTML = card.type.name;
         (cardElement.querySelector(".card-name") as HTMLElement).style.color = card.type.color;
-        cardElement.querySelector(".card-text").innerHTML = card.sentence;
+        if (difficulty !== "easy") {
+            cardElement.querySelector(".card-text").innerHTML = card.sentence;
+        }
 
         cardElement.addEventListener("click", e => onCardClick(e, cardElement, card));
 
@@ -283,7 +298,7 @@ function generateAndPlaceCards(difficulty: string): void {
     let symbolSize = SYMBOL_SIZES[difficulty];
     rootStyle.setProperty("--symbol-size", symbolSize);
 
-    placeCards(cards);
+    placeCards(cards, difficulty);
 }
 
 
@@ -350,7 +365,7 @@ function unflipCard(cardElement: HTMLDivElement, card: PartialCard) {
     card.flipped = false;
 }
 
- //TODO: sounds n stuff
+//TODO: sounds n stuff
 
 function updateScore() {
     console.log("Score: " + score);

@@ -89,10 +89,17 @@ body {
     vertical-align: super;
 }
 
+.card.hard .card-icon-wrapper {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
 
 .card-name {
     font-size: var(--symbol-size);
     vertical-align: 10px;
+    margin-left: 4px;
     display: inline-block;
 }
 
