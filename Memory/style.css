@@ -142,15 +142,15 @@ body {
     color: #cdcdcd;
 }
 .score-container {
-    font-size: 1.2vw;
+    font-size: 2.5vh;
 }
 .score {
-    font-size: 2vw;
+    font-size: 2.5vh;
     text-align: center;
 }
 #player-indicator {
     text-align: center;
-    font-size: 1.5vw;
+    font-size: 2.5vh;
 }
 
 #footermsg {
@@ -160,6 +160,7 @@ body {
     right: 5px;
     width: 50%;
     color: #cdcdcd;
+    font-size: 1vh;
 }
 
 #winscreen {
