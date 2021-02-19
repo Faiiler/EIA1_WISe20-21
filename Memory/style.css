@@ -1,5 +1,5 @@
-:root {
-    --card-columns: 10;
+:root { /*Globale Angaben: Die Variablen können im ganzen CSS verwendet werden. Dient u.a. zur Fehlervermeidung*/
+    --card-columns: 10; /*-- steht für die Dekeleration einer Variablen // Die Zahl wird als Filler verwendet*/
     --card-rows: 5;
 
     --card-width: calc(100 / var(--card-columns) * 0.9vw);
@@ -12,7 +12,7 @@
 html,body {
     width: 100%;
     height: 100%;
-    overflow: hidden; /* alles was nicht auf die Seite passt, wird ausgebelendet*/
+    overflow: hidden; /* alles was nicht auf die Seite passt, wird ausgeblendet*/
 }
 
 body {
@@ -52,7 +52,7 @@ body {
     opacity: 0;
 }
 
-/* Flipping stuff based on https://www.w3schools.com/howto/howto_css_flip_card.asp */
+/* Zum drehen der Karten: https://www.w3schools.com/howto/howto_css_flip_card.asp */
 
 .card-inner {
     background-color: gray;
@@ -100,7 +100,7 @@ body {
     width: var(--symbol-size);
     height: var(--symbol-size);
     display: inline-block;
-    vertical-align: super;
+    vertical-align: super; /*Super -> Über den Text stellen, bzw. hier: über die Karte stellen */
 }
 
 .card.hard .card-icon-wrapper {
@@ -162,9 +162,6 @@ body {
     color: #cdcdcd;
 }
 
-/**************/
-
-
 #winscreen {
     position: absolute;
     top: 0;
@@ -208,14 +205,15 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(40, 40, 40, 0.5);
-    z-index: 10; /*Angabe zur Ebene der Seite -> Groß: Vordergrund, klein: Hintergrund*/
-    opacity: 1;
-    transition: opacity 800ms;
+    z-index: 10;
+
+    opacity: 1; /* Deckkraft startet bei 100% */
+    transition: opacity 800ms; /* Transation auf 'opacity' mit 800ms länge */
 }
 
 
 #splashscreen.hidden {
-    opacity: 0;
+    opacity: 0; /* Deckkraft auf 0% zum ausblenden */
 }
 
 #gametype-select {
@@ -239,7 +237,7 @@ body {
     border: none;
     font-size: 20px;
     border-radius: 5px;
-    box-shadow: black 0 0 5px;
+    box-shadow: black 0 0 5px; /* Schwarze Umrandung */
 }
 
 .difficulty-button.easy {

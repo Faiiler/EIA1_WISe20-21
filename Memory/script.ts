@@ -1,50 +1,46 @@
-interface Sentence {
+//Erstellen von Interfaces
+
+interface Sentence { // Layout eines Satzes, bestehend aus zwei Teilen
     a: string;
     b: string;
 }
 
-interface CardType {
+interface CardType { //Karte besteht aus einem Namen, einem Symbol und einer Karte
     name: string;
     symbol: string;
     color: string;
 }
 
-
-/** The entire card, containing both sentence parts **/
-interface Card {
+interface Card { //Die Karte beinhaltet beide Satzteile und den oben genannten CardType
     sentence: Sentence;
     type: CardType;
 }
 
-/** One of two cards in a pair **/
-interface PartialCard {
+interface PartialCard { //Ein Kartenteil eines Paares
     type: CardType;
     sentence?: string; // ? = Optional, muss kein Satz haben
 }
 
-/////////////
+//Deklarierungen von Variablen welche die Quellen im HTML haben
 
 const splashscreen: HTMLElement = document.querySelector("#splashscreen");
 const gameTypeSelect: HTMLSelectElement = document.querySelector("#gametype-select");
-
 const winscreen: HTMLElement = document.querySelector("#winscreen");
 const winMessage: HTMLElement = document.querySelector("#winmessage");
-
 const cardsContainer: HTMLDivElement = document.querySelector("#cards-container");
 const cardTemplate: HTMLDivElement = document.querySelector("#card-template");
-
 const playerIndicator: HTMLElement = document.querySelector("#player-indicator");
 
 
-///////////
+//Erstellen von Variablen, welchen in TS erstellt wurden
 
-const CARDS_PER_DIFFICULTY = {
+const CARDS_PER_DIFFICULTY = { //Aufteilung der Anzahl an Kartenpaaren nach Schwierigkeit
     "easy": 4,
     "medium": 8,
     "hard": 16
 };
 
-const ROWS_COLS = {
+const ROWS_COLS = { //Aufteilung der Karten in Reihen und Spalten (rows/columns)
     "easy": {
         r: 2,
         c: 4
@@ -59,19 +55,19 @@ const ROWS_COLS = {
     }
 };
 
-const TEXT_SIZES = {
-    "easy": "1.6em",
+const TEXT_SIZES = { //Angabe der Schriftgrößen in Abhängigkeit der Schwierigkeit
+    "easy": "1.6em", //https://www.w3schools.com/cssref/css_units.asp
     "medium": "1,4em",
     "hard": "0.87em"
 }
 
-const SYMBOL_SIZES = {
-    "easy": "4vw",
+const SYMBOL_SIZES = { // Angabe der Größe der Symbole
+    "easy": "4vw", //https://www.w3schools.com/cssref/css_units.asp
     "medium": "2.5vw",
     "hard": "2vw"
 }
 
-const CARD_NAMES = [
+const CARD_NAMES = [ //Angabe der Kartennamen
     "A",
     "2",
     "3",
@@ -86,22 +82,22 @@ const CARD_NAMES = [
     "Q",
     "K"
 ];
-const CARD_SYMBOLS = [
+const CARD_SYMBOLS = [ //Angabe der Kartensymbole
     "club",
     "diamond",
     "heart",
     "spade"
 ];
 
-const CARD_COLORS = [
+const CARD_COLORS = [ //Angabe der 16 verschiedenen Farben für die Kartenpaare
     "#540D6E",
-    "#EE4266",
+    "#AA4596",
     "#EE4266",
     "#3BCEAC",
     "#0EAD69",
     "#6E9887",
     "#216869",
-    "#49A078",
+    "#123294",
     "#4C4C47",
     "#848FA5",
     "#F564A9",
@@ -112,7 +108,7 @@ const CARD_COLORS = [
     "#4A6C6F"
 ];
 
-const CARD_IMAGES = {
+const CARD_IMAGES = { //Erstellen der Icons Source: https://www.flaticon.com/download/icon/landing/3141794?format=svg&size=512
     "club": '<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 240">\n' +
         '  <title>club</title>\n' +
         '  <path d="M645,374a60,60,0,0,0,15-118.11,60,60,0,1,0-119.94,0,60,60,0,1,0,45,110V404H570a15,15,0,0,0,0,30h60a15,15,0,0,0,0-30H615V365.93A59.64,59.64,0,0,0,645,374Z" transform="translate(-495 -194)"/>\n' +
@@ -131,7 +127,7 @@ const CARD_IMAGES = {
         '</svg>\n'
 };
 
-const SENTENCES: Sentence[] = [
+const SENTENCES: Sentence[] = [ //Angabe der Sätze
     {
         a: "Die let Variable ist eine lokale Variable, während eine var Variable...",
         b: "... in jeder Stelle des Codes aufgerufen werden kann (globale Variable)."
@@ -206,10 +202,12 @@ const SENTENCES: Sentence[] = [
 
 ];
 
-const SHOW_CARD_DURATION = 3000;
+const SHOW_CARD_DURATION = 3000; //Wie lange bleiben die Karten aufgedeckt, nachdem beide aufgedeckt wurden
+
+//Beginn der Logik
 
 
-function getAllCardTypes(): CardType[] {
+function getAllCardTypes(): CardType[] { //Erstellen von allen Symbolen- bzw Namenskombinationen und einer zufälligen Farbe
     const allCardTypes: CardType[] = [];
     for (let symbol of CARD_SYMBOLS) {
         for (let name of CARD_NAMES) {
@@ -220,21 +218,21 @@ function getAllCardTypes(): CardType[] {
             });
         }
     }
-    console.log(`All card types: `);
-    console.log(allCardTypes);
+    //  console.log(`All card types: `); Überprüfen von was erstellt wird
+    //  console.log(allCardTypes);
     return allCardTypes;
 }
 
-function generateCards(difficulty: string): Card[] {
-    const cardsToGenerate = CARDS_PER_DIFFICULTY[difficulty];
-    console.log(`Generating ${cardsToGenerate} ${difficulty} card pairs`);
+function selectCards(): Card[] { // Wir wählen die Karten aus, die plaziert werden
+    const cardsToGenerate = CARDS_PER_DIFFICULTY[difficulty]; //Wieviel Karten wollen wir auf welcher Schwierigkeit erstellen?
+    console.debug(`Generating ${cardsToGenerate} ${difficulty} card pairs`); //Angabe, was wird erstellt mit welcher Schwierigkeitsstfue
 
     const allCardTypes: CardType[] = getAllCardTypes();
-    const sentences: Sentence[] = SENTENCES.slice(0, SENTENCES.length); // copy sentences so we can delete stuff
+    const sentences: Sentence[] = SENTENCES.slice(0, SENTENCES.length); // Kopieren das Array, damit wir später etwas löschen können
     const cards: Card[] = [];
     for (let i = 0; i < cardsToGenerate; i++) {
         // https://stackoverflow.com/a/5915122
-        // get random  elements from both arrays & delete them so we don't select any twice
+        // Kopieren Elemente von CardType und Sentence, nehmen eins raus und löschen dieses Element aus allCardTypes bzw. sentences, sodass wir dies nicht erneut auswählen
         let cardType: CardType = allCardTypes.splice(Math.floor(Math.random() * allCardTypes.length), 1)[0];
         let sentence: Sentence = sentences.splice(Math.floor(Math.random() * sentences.length), 1)[0];
 
@@ -243,15 +241,15 @@ function generateCards(difficulty: string): Card[] {
             sentence: sentence
         });
     }
-    return cards;
+    return cards; //Geben die Karte aus, die wir eben ausgewählt haben
 }
 
+const cardStorage: { [key: string]: PartialCard } = {}; // Card Element ID -> Partial Card || Inline Interface
 
-function placeCards(cards: Card[], difficulty: string): void {
-    // Convert the merged cards into partial ones with separate sentence parts
+function placeCards(cards: Card[]): void { //Aufteilung der Karten in zwei Teile
     const partialCards: PartialCard[] = [];
-    for (let card of cards) {
-        partialCards.push({
+    for (let card of cards) { //Alternativ auch for(let i = 0;i<cards.length;i++) { let card = cards[i];
+        partialCards.push({ //Wir pushen die zwei Kartenteile, die unten aufgeteilt werden
             type: card.type,
             sentence: card.sentence.a
         });
@@ -260,49 +258,51 @@ function placeCards(cards: Card[], difficulty: string): void {
             sentence: card.sentence.b
         });
     }
-    shuffle(partialCards); // Randomize card placement (don't want the matching ones next to each other)
+    shuffle(partialCards); // Zufälliges sortieren der Karten, sodass die zusammengehörenden Karten nicht direkt nebeneinander liegen
 
     let cardCounter = 0;
     for (let card of partialCards) {
-        let cardElement: HTMLDivElement = cardTemplate.cloneNode(true) as HTMLDivElement;
-        cardElement.id = `card${cardCounter++}`;
-        cardElement.classList.add("card");
-        cardElement.classList.add(difficulty);
+        let cardElement: HTMLDivElement = cardTemplate.cloneNode(true) as HTMLDivElement; //Klonen der HTML ID "Card Template". Durch setzen von deep auf true klonen wir auch die Inneren Elemente mit
+        cardElement.id = "card" + cardCounter++; //Dient zur besseren übersicht, wenn wir ein bestimmtes Element untersuchen wollen
+        cardElement.classList.add("card"); //Zuweisen einer Klasse zur Karte
+        cardElement.classList.add(difficulty); //Zuweisen einer bestimmten Schwierigkeit zur Karte
 
-        cardElement.dataset["carddata"] = btoa(JSON.stringify(card));
+        cardStorage[cardElement.id] = card; // Speichern des Karteninhalts dieser ID
 
         if (difficulty !== "hard") {
-            cardElement.querySelector(".card-icon-wrapper").innerHTML = CARD_IMAGES[card.type.symbol];
-            (cardElement.querySelector(".card-icon-wrapper>svg>path") as HTMLLIElement).style.fill = card.type.color;
+            cardElement.querySelector(".card-icon-wrapper").innerHTML = CARD_IMAGES[card.type.symbol]; //Einfügen der SVG Datei
+            (cardElement.querySelector(".card-icon-wrapper>svg>path") as HTMLElement).style.fill = card.type.color; //Einfärben des Icons
         }
-        cardElement.querySelector(".card-name").innerHTML = card.type.name;
-        (cardElement.querySelector(".card-name") as HTMLElement).style.color = card.type.color;
+        cardElement.querySelector(".card-name").innerHTML = card.type.name; //Zuweisen des Namens
+        (cardElement.querySelector(".card-name") as HTMLElement).style.color = card.type.color; //Einfärben des Namens
         if (difficulty !== "easy") {
-            cardElement.querySelector(".card-text").innerHTML = card.sentence;
+            cardElement.querySelector(".card-text").innerHTML = card.sentence; //Einfügen des Satzes
         }
 
-        cardElement.addEventListener("click", e => onCardClick(e, cardElement));
+        cardElement.addEventListener("click", function () {
+            onCardClick(cardElement, false); // Klicken des Card-Elements möglich
+        });
 
-        cardsContainer.appendChild(cardElement);
+        cardsContainer.appendChild(cardElement); //Einfügen des Card Elements in den Cards Container
     }
 }
 
-function generateAndPlaceCards(difficulty: string): void {
-    const cards = generateCards(difficulty);
+function selectAndPlaceCards(): void {
+    const cards = selectCards();
 
-    let rootStyle = (document.querySelector(":root") as HTMLElement).style;
+    let rootStyle = (document.querySelector(":root") as HTMLElement).style; //Bezieht sich auf den CSS Style Root
 
-    let rc = ROWS_COLS[difficulty];
-    rootStyle.setProperty("--card-columns", rc.c);
+    let rc = ROWS_COLS[difficulty]; //Erstellen von rows/columns je nach Schwierigkeit
+    rootStyle.setProperty("--card-columns", rc.c); //setProperty passt CSS an (je nach Schwierigkeit wird die card columns in CSS geändert)
     rootStyle.setProperty("--card-rows", rc.r);
 
-    let textSize = TEXT_SIZES[difficulty];
+    let textSize = TEXT_SIZES[difficulty]; //Anpassen von Textgröße je nach Schwierigkeit
     rootStyle.setProperty("--text-size", textSize);
 
-    let symbolSize = SYMBOL_SIZES[difficulty];
+    let symbolSize = SYMBOL_SIZES[difficulty]; //Anpassen von Symbolgröße je nach Schwierigkeit
     rootStyle.setProperty("--symbol-size", symbolSize);
 
-    placeCards(cards, difficulty);
+    placeCards(cards);
 }
 
 let difficulty: string = "easy";
@@ -315,66 +315,65 @@ let inputLocked: boolean = false;
 let lastFlippedCard: PartialCard;
 let lastFlippedCardElement: HTMLDivElement;
 
-function onCardClick(event: MouseEvent, cardElement: HTMLDivElement, isAiClick: boolean = false) {
+function onCardClick(cardElement: HTMLDivElement, isAiClick: boolean) {
     if (inputLocked) {
-        // disable input while animation is playing
+        // Wir schalten die Möglichkeit aus, dass man während der Card Flip Animation eine andere Karte klicken kann
         return;
     }
     if (gameType === "ai" && activePlayer !== 0 && !isAiClick) {
-        // disable input while ai is playing
+        // Wir schalten die Möglichkeit aus, dass ein Spieler während des Zuges der AI klicken kann
         return;
     }
 
     if (cardElement.classList.contains("flipped")) {
-        return;
+        return; //Wir schalten die Möglichkeit aus, bereits geflippte Karten erneut umzudrehen
     }
 
-    let card = JSON.parse(atob(cardElement.dataset["carddata"])) as PartialCard;
-    console.log(`Card flipped by player ${activePlayer}!`);
+    let card = cardStorage[cardElement.id]; // Wir suchen die Karte raus, die wir vorhin auf der ID gespeichert haben
+    console.log("Card " + cardElement.id + " flipped by player " + activePlayer + "!");
     console.log(card);
 
-    cardElement.classList.add("flipped");
+    cardElement.classList.add("flipped"); // Weisen der Karte die Klasse flipped zu
 
-    if (lastFlippedCard) {
-        // Allow fast clicks for selecting the second card,
-        // but prevent another click while the flip-back animations are still playing
-        inputLocked = true;
+    if (lastFlippedCard) { //Klick auf zweite Karte
+        inputLocked = true; //Verhindert klicken
 
-        if (areCardsEqual(lastFlippedCard, card)) { // matching cards!
+        if (areCardsEqual(lastFlippedCard, card)) { //Sofern die letzte und die momentane Karte gleich sind...
             console.log("Matching cards!")
-            scores[activePlayer]++;
+            scores[activePlayer]++; // ...wird der Score um 1 erhöht
 
-            let lastFlippedCardElementCopy = lastFlippedCardElement;
+            let lastFlippedCardElementCopy = lastFlippedCardElement; //Erstellen einer Kopie der letzten Karte
             setTimeout(function () {
-                cardElement.classList.add("hidden");
+                cardElement.classList.add("hidden"); //Ausblenden der zusammengehörigen Kartenpaare
                 lastFlippedCardElementCopy.classList.add("hidden");
             }, 800);
 
-            lastFlippedCard = undefined;
+            lastFlippedCard = undefined; //Löschen der zusammengehörigen Kartenpaare, damit wir wieder neue bestimmen können
             lastFlippedCardElement = undefined;
 
-            // Allow inputs again
-            setTimeout(function () {
+
+            setTimeout(function () { //Nach 500ms kann man wieder klicken
                 inputLocked = false;
             }, 500);
 
-            // matched card, give the player another chance
-        } else { // don't match :c
+
+        } else { //Falls die Karten kein Paar sind
             console.log("Wrong cards!")
             setTimeout(function () {
-                unflipCard(cardElement);
+
+                unflipCard(cardElement); //Umdrehen beider Karten
                 unflipCard(lastFlippedCardElement);
-                lastFlippedCard = undefined;
+                lastFlippedCard = undefined; //Löschen der ausgewählten Kartenpaare, damit wir wieder neue bestimmen können
                 lastFlippedCardElement = undefined;
 
-                // Allow inputs again
-                setTimeout(function () {
-                    inputLocked = false;
-                }, 500)
-            }, SHOW_CARD_DURATION);
 
-            // let the other player play
-            if (gameType !== "solo") {
+                setTimeout(function () { //Nach 500 ms kann man wieder klicken
+                    inputLocked = false;
+                }, 500);
+
+            }, SHOW_CARD_DURATION); //Nach 3000 ms wird der obige Code ausgeführt
+
+            if (gameType !== "solo") { //Sofern der Spielmodus nicht solo ist, kommt der nächste Spieler dran
                 if (activePlayer === 0) {
                     activePlayer = 1;
                 } else {
@@ -383,7 +382,7 @@ function onCardClick(event: MouseEvent, cardElement: HTMLDivElement, isAiClick: 
             }
         }
 
-        setTimeout(function () {
+        setTimeout(function () { //Timeout, nach 500 ms wird der Spieler gewechselt
             switchPlayer();
         }, 500);
     } else {
@@ -394,42 +393,41 @@ function onCardClick(event: MouseEvent, cardElement: HTMLDivElement, isAiClick: 
     updateScore();
 }
 
-function areCardsEqual(a: PartialCard, b: PartialCard) {
+function areCardsEqual(a: PartialCard, b: PartialCard) { //Überprüfen ob die Kartenpaare miteinander übereinstimmen
     return a.type.color === b.type.color && a.type.symbol === b.type.symbol && a.type.name === b.type.name;
 }
 
 function unflipCard(cardElement: HTMLDivElement) {
-    cardElement.classList.remove("flipped");
+    cardElement.classList.remove("flipped"); //Beim umdrehen, wird die Klasse flipped entfernt
 }
 
 function updateScore() {
     console.log("Scores: " + scores);
     for (let i = 0; i < scores.length; i++) {
-        document.querySelector(`#score${i}`).innerHTML = `${scores[i]}`;
+        document.querySelector("#score" + i).innerHTML = "" + scores[i]; //Score wird im HTML aktualisiert
     }
 
-    // Check if we're done
-    let availableCards = document.querySelectorAll(".card:not(.flipped)") as NodeListOf<HTMLDivElement>;
-    if (availableCards.length === 0) {
+    let availableCards = document.querySelectorAll(".card:not(.flipped)") as NodeListOf<HTMLDivElement>; //Wir suchen alle Karten die nicht flipped sind
+    if (availableCards.length === 0) { //falls keine karte nicht geflipped ist, dann sind wir fertig
         console.log("I found no cards, I guess we're done!");
 
-        if (scores[0] > scores[1]) {
+        if (scores[0] > scores[1]) { //Falls Score 0 größer als Score 1 ist...
             if (gameType === "ai" || gameType === "solo") {
-                winMessage.innerHTML = "You win!"
+                winMessage.innerHTML = "You win!" //... gewinnt man im Typ Ai/Solo
             } else if (gameType === "multi") {
-                winMessage.innerHTML = "Player 1 wins!"
+                winMessage.innerHTML = "Player 1 wins!" //... gewinnt Spieler 1
             }
-        } else if (scores[0] < scores[1]) {
+        } else if (scores[0] < scores[1]) { //Falls Score 1 größer als Score 0 ist....
             if (gameType === "ai") {
-                winMessage.innerHTML = "You lose";
+                winMessage.innerHTML = "You lose"; //... verliert man gegen die Ai
             } else if (gameType === "multi") {
-                winMessage.innerHTML = "Player 2 wins!"
+                winMessage.innerHTML = "Player 2 wins!" //... gewinnt Spieler 2
             }
         } else {
-            winMessage.innerHTML = "Draw!";
+            winMessage.innerHTML = "Draw!"; //Falls der Score gleich ist, gibt es ein Unentschieden
         }
 
-        setTimeout(function () {
+        setTimeout(function () { //Nach 500 ms wird der winscreen angezeigt
             winscreen.classList.add("visible");
             winscreen.style.display = "";
         }, 500);
@@ -437,61 +435,62 @@ function updateScore() {
 }
 
 function switchPlayer() {
-    if (gameType === "solo") return;
+    if (gameType === "solo") return; // Es gibt keinen anderen Spieler
     if (gameType === "ai") {
-        if (activePlayer === 0) {
+        if (activePlayer === 0) { // Spieler ist dran
             playerIndicator.innerHTML = "Player's turn";
-        } else {
+        } else { // Ai ist dran
             playerIndicator.innerHTML = "Computer's turn";
 
             setTimeout(function () {
+                // Ausführen des Ai-Zuges
                 makeAiTurn(true);
             }, SHOW_CARD_DURATION + 1000);
         }
     } else if (gameType === "multi") {
-        playerIndicator.innerHTML = `Player ${activePlayer + 1}'s turn`;
+        // Spieler 1/2 ist dran
+        playerIndicator.innerHTML = "Player " + (activePlayer + 1) + "'s turn";
     }
 }
 
-function makeAiTurn(flipAgain: boolean) {
-    let availableCards = document.querySelectorAll(".card:not(.flipped)") as NodeListOf<HTMLDivElement>;
-    if (availableCards.length === 0) {
+function makeAiTurn(flipAgain: boolean) { //Zug der Ai
+    let availableCards = document.querySelectorAll(".card:not(.flipped)") as NodeListOf<HTMLDivElement>; //Wir suchen alle Karten die nicht flipped sind
+    if (availableCards.length === 0) { //Falls es keine gibt wird abgebrochen
         return;
     }
-    let cardElement = availableCards.item(Math.floor(Math.random() * availableCards.length));
+    let cardElement = availableCards.item(Math.floor(Math.random() * availableCards.length)); //Aussuchen einer zufälligen Karte
 
-    onCardClick(undefined, cardElement, true);
+    onCardClick(cardElement, true); //Karte wird geklickt
 
-    if (flipAgain) {
+    if (flipAgain) { //Sofern die Ai noch einmal flippen darf, dreht er die nächste Karte nach 800 ms um. Danach darf er nicht nochmal eine umdrehen
         setTimeout(function () {
             makeAiTurn(false);
         }, 800);
     }
 }
 
-// Hides the splashscreen + starts the game with selected difficulty
+
 function start(diff: string, type: string): void {
-    winscreen.classList.remove("visible");
-    winscreen.style.display = "none";
+    (document.querySelector("#top-container") as HTMLElement).style.display = ""; //einblenden Top Container
+    (document.querySelector("#bottom-container") as HTMLElement).style.display = ""; //einblenden Bottom Container
 
-    (document.querySelector("#top-container") as HTMLElement).style.display = "";
-    (document.querySelector("#bottom-container") as HTMLElement).style.display = "";
-
-    console.log(`Starting ${diff} ${type} game`);
-
-    (document.querySelector(".splashscreen-button-container") as HTMLElement).style.display = "none";
-    splashscreen.classList.add("hidden");
+    console.log("Starting " + diff + " " + type + " game"); //Auf welcher Schwierigkeitsstufe wird welcher Spieltyp gestartet?
     difficulty = diff;
     gameType = type;
-    setTimeout(function () {
+
+    (document.querySelector(".splashscreen-button-container") as HTMLElement).style.display = "none"; //vermeiden von klicks, wenn splashscreen sich ausblendet
+    splashscreen.classList.add("hidden"); // Starten der ausblend-animation
+
+    setTimeout(function () { //Ausblenden + entfernen des Splashscreens (siehe CSS)
         splashscreen.style.display = "none";
     }, 800);
-    generateAndPlaceCards(diff);
 
-    if (type === "solo") {
+    selectAndPlaceCards();
+
+    if (type === "solo") { //Wenn Einzelspieler, passiert nichts
         (document.querySelector("#score1container") as HTMLElement).style.display = "none";
     } else if (type === "ai") {
-        // let the computer go first
+        // Beim Spielen gegen den Computer, darf die Ai zuerst spielen
         activePlayer = 1;
         switchPlayer();
     }
@@ -499,21 +498,19 @@ function start(diff: string, type: string): void {
 
 
 document.querySelectorAll(".difficulty-button").forEach(function (el: HTMLElement) {
-    el.addEventListener("click", function() {
+    el.addEventListener("click", function () {
+        //Das Spiel wird gestartet und die Schwierigkeit ist abhängig von dem geklickten Button
         start(el.dataset["difficulty"], gameTypeSelect.value);
-    })
+    }) //Aussuchen der Schwierigkeit auf den HTML Difficulty Buttons
 });
+
 document.querySelector("#play-again-button").addEventListener("click", function () {
-    //  start(difficulty, gameType);
-    window.location.reload();
+    window.location.reload(); // Seite wird neu geladen bei klick auf play again Button
 })
 
-// https://stackoverflow.com/a/6274381
-/**
- * Shuffles array in place.
- * @param {Array} a items An array containing the items.
- */
-function shuffle(a) {
+// Quelle: https://stackoverflow.com/a/6274381
+// Mischen der Karten
+function shuffle(a: any[]): any[] { //Normalerweise sollte man any nicht verwenden, ich hoffe jedoch, dass man hier eine Ausnahme machen kann!
     let j, x, i;
     for (i = a.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
